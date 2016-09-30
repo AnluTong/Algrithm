@@ -1,2 +1,3 @@
 # Algrithm
-point cloud related algrithm
+点云处理相关算法，包含以下几个部分：
+1. PCDCalcute 文件夹，处理激光传感器扫描点云的样例，主要用于目标区域误差分析。首先过滤目标区域点云，其次创建kd tree，然后基于kd tree进行knn邻域搜索及聚类分析，最后将获得的点云进行最小二乘法进行平面拟合，得出误差分析结论。
