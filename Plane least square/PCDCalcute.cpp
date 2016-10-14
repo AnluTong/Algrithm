@@ -7,7 +7,6 @@
 #include <fstream>
 #include "Point.h"
 #include "PlaneUtils.h"
-#include "KDTree.h"
 
 using namespace std;
 
@@ -19,25 +18,6 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	vector<Point*> dest;
 	vector<Point*> raw = anlysisFile("sick.pcd", dest);
-
-	//k近邻搜索，进行聚类划分
-	for (vector<Point*>::iterator it = dest.begin(); it != dest.end();)
-	{
-		KDTree* tree = new KDTree();
-		KDTree::buildKdTree(tree, dest, 0);
-		//相邻点判断标准为3个
-		vector<Point*> result = KDTree::knn(*it, tree, 3);
-
-		//若相邻点个数小于2，且次相邻点与该点距离大于阈值，则判断该点为离群点
-		if(result.size() < 2 || KDTree::measureDistance(**it, *result[1]) > MAX_DISTANCE)
-		{
-			it = dest.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
 
 	//最小二乘法进行平面拟合
 	PlaneUtils::PlaneCoef coef;
