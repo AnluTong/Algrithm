@@ -10,24 +10,24 @@ using namespace std;
 class KMean
 {
 private:
-		vector<vector<double> > dataSet; // Êı¾İ¼¯ºÏ
-		int DIM_SIZE, DATE_SIZE; // Êı¾İÎ¬¶È¼°Êı¾İÊıÁ¿
-		int K_SIZE; //»®·ÖÎªK¸ö¾ÛÀà
-		vector<vector<double> > centroids; //K¸ö¾ÛÀàÖĞĞÄ
-		class Node //¸¨Öú½Úµã
+		vector<vector<double> > dataSet; // æ•°æ®é›†åˆ
+		int DIM_SIZE, DATE_SIZE; // æ•°æ®ç»´åº¦åŠæ•°æ®æ•°é‡
+		int K_SIZE; //åˆ’åˆ†ä¸ºKä¸ªèšç±»
+		vector<vector<double> > centroids; //Kä¸ªèšç±»ä¸­å¿ƒ
+		class Node //è¾…åŠ©èŠ‚ç‚¹
 		{
 		public:
-			int minIndex; // ÊôÓÚÄÄ¸öÖÊĞÄµÄÀà±ğ
-			double minDist; // Óë×î½üÖÊĞÄµÄ¾àÀë
+			int minIndex; // å±äºå“ªä¸ªè´¨å¿ƒçš„ç±»åˆ«
+			double minDist; // ä¸æœ€è¿‘è´¨å¿ƒçš„è·ç¦»
 			Node(int idx, double dist):minIndex(idx),minDist(dist) {}
 		};
-		vector<Node> clusterAssignment; //¸¨Öú½ÚµãÊı×é£¬ÓÃÓÚ´æ´¢Ã¿¸öµãÊôÓÚµÄ¾ÛÀàÖĞĞÄ¼°Á½Õß¼ä¾àÀë£¬Ò»Ò»¶ÔÓ¦ÓÚdataSet
+		vector<Node> clusterAssignment; //è¾…åŠ©èŠ‚ç‚¹æ•°ç»„ï¼Œç”¨äºå­˜å‚¨æ¯ä¸ªç‚¹å±äºçš„èšç±»ä¸­å¿ƒåŠä¸¤è€…é—´è·ç¦»ï¼Œä¸€ä¸€å¯¹åº”äºdataSet
 	
-		void initCentroids(); //³õÊ¼»¯¾ÛÀàÖĞĞÄµÄÄ³Ò»Î¬¶ÈÖµ
-		void initClusterAssignment(); //³õÊ¼»¯¸¨Öú½ÚµãÊı×é
-		double distEclud(vector<double> &v1, vector<double> &v2); //²âÁ¿Á½µãµÄÅ·À­¾àÀë
+		void initCentroids(); //åˆå§‹åŒ–èšç±»ä¸­å¿ƒçš„æŸä¸€ç»´åº¦å€¼
+		void initClusterAssignment(); //åˆå§‹åŒ–è¾…åŠ©èŠ‚ç‚¹æ•°ç»„
+		double distEclud(vector<double> &v1, vector<double> &v2); //æµ‹é‡ä¸¤ç‚¹çš„æ¬§æ‹‰è·ç¦»
 
-		void init(const vector<vector<double> >& data, int k); //³õÊ¼»¯½Ó¿Ú
+		void init(const vector<vector<double> >& data, int k); //åˆå§‹åŒ–æ¥å£
 		void clusterImpl(const vector<vector<double> >& data, int k);
 		vector<Cluster> devideCluster();
 public:

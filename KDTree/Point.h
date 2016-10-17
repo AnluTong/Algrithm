@@ -15,7 +15,7 @@ private:
 	std::vector<T> values;
 };
 
-/**具体计算距离方法**/
+/**鍏蜂綋璁＄畻璺濈鏂规硶**/
 double measureDistance(Point<double>& point1, Point<double>& point2)
 {
 	int dim = -1;

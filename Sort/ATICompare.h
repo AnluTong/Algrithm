@@ -4,6 +4,6 @@ template <class T>
 class ATICompare
 {
 public:
-	/**左小于右，则为true**/
+	/**宸﹀皬浜庡彸锛屽垯涓簍rue**/
 	virtual bool compare(T& left, T& right) = 0;
 };

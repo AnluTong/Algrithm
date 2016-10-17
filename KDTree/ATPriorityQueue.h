@@ -8,7 +8,7 @@ class ATPriorityQueue
 public:
 	ATPriorityQueue(ATICompare<T>& cp, int cap = -1) : comp(cp), capicity(cap) {	}
 
-	//³ö¶Ó£¬´ó¶¥¶Ñ£¬Öµ´óµÄ³ö¶Ó
+	//å‡ºé˜Ÿï¼Œå¤§é¡¶å †ï¼Œå€¼å¤§çš„å‡ºé˜Ÿ
 	T poll()
 	{
 		if(data.size() == 0)
@@ -19,12 +19,12 @@ public:
 		return ATHeap<T>::heapOut(data, comp);
 	}
 
-	//Èë¶Ó
+	//å…¥é˜Ÿ
 	void add(T& value)
 	{
 		if(capicity == -1)
 		{
-			ATHeap<T>::heapIn(data, value, comp); //Î´ÉèÖÃcapicityÔò¶Ñ´óĞ¡ÎŞÏŞÖÆ
+			ATHeap<T>::heapIn(data, value, comp); //æœªè®¾ç½®capicityåˆ™å †å¤§å°æ— é™åˆ¶
 		}
 		else
 		{
@@ -34,7 +34,7 @@ public:
 			}
 			else
 			{
-				/**µ±Ç°ÖµĞ¡ÓÚ´ó¸ù¶Ñ¶¥ÔªËØÊ±£¬Ìæ»»¶Ñ¶¥ÔªËØ£¬²¢ÖØĞÂµ÷Õû¶Ñ**/
+				/**å½“å‰å€¼å°äºå¤§æ ¹å †é¡¶å…ƒç´ æ—¶ï¼Œæ›¿æ¢å †é¡¶å…ƒç´ ï¼Œå¹¶é‡æ–°è°ƒæ•´å †**/
 				if(comp.compare(value, data[0]))
 				{
 					data[0] = value;
@@ -55,7 +55,7 @@ public:
 	}
 
 private:
-	vector<T> data; //heapÔ´Êı¾İ
+	vector<T> data; //heapæºæ•°æ®
 	ATICompare<T>& comp;
 	int capicity;
 };

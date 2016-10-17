@@ -5,8 +5,8 @@ class MatrixUtils
 public:
 	static const int N = 3;
 
-	//¾ØÕóÇóÄæ¶¨ÒåA^(-1) = A^(*)/|A|
-	//µÃµ½¸ø¶¨¾ØÕósrcµÄÄæ¾ØÕó±£´æµ½desÖĞ¡£
+	//çŸ©é˜µæ±‚é€†å®šä¹‰A^(-1) = A^(*)/|A|
+	//å¾—åˆ°ç»™å®šçŸ©é˜µsrcçš„é€†çŸ©é˜µä¿å­˜åˆ°desä¸­ã€‚
 	static bool GetMatrixInverse(double src[N][N],int n,double des[N][N])
 	{
 		double flag=getA(src,n);
@@ -35,7 +35,7 @@ public:
 
 private:
 
-	//°´µÚÒ»ĞĞÕ¹¿ª¼ÆËã|A|
+	//æŒ‰ç¬¬ä¸€è¡Œå±•å¼€è®¡ç®—|A|
 	static double getA(double arcs[N][N],int n)
 	{
 		if(n==1)
@@ -68,7 +68,7 @@ private:
 		return ans;
 	}
 
-	//¼ÆËãÃ¿Ò»ĞĞÃ¿Ò»ÁĞµÄÃ¿¸öÔªËØËù¶ÔÓ¦µÄÓà×ÓÊ½£¬×é³ÉA*
+	//è®¡ç®—æ¯ä¸€è¡Œæ¯ä¸€åˆ—çš„æ¯ä¸ªå…ƒç´ æ‰€å¯¹åº”çš„ä½™å­å¼ï¼Œç»„æˆA*
 	static void  getAStart(double arcs[N][N],int n,double ans[N][N])
 	{
 		if(n==1)

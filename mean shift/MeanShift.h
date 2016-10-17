@@ -16,7 +16,7 @@ public:
 	vector<Cluster> cluster(vector<vector<double> >& points, double bandwidth);
 
 private:
-	/**ÉèÖÃºËº¯Êý**/
+	/**è®¾ç½®æ ¸å‡½æ•°**/
 	double (*kernelFunc)(double,double);
 	void setKernel(double (*fun)(double,double));
 

@@ -46,36 +46,36 @@ vector<Cluster> MeanShift::cluster(vector<vector<double> >& points, double bandw
 		vector<double> oldMean = points[i];
 
 		int count = 0;
-		while(count < MAX_CIRCLE_COUNT) //ÉèÖÃ×î´óÑ­»·´ÎÊý
+		while(count < MAX_CIRCLE_COUNT) //è®¾ç½®æœ€å¤§å¾ªçŽ¯æ¬¡æ•°
 		{
-			//¶Ô¸Ãµã½øÐÐÆ«ÒÆ
+			//å¯¹è¯¥ç‚¹è¿›è¡Œåç§»
 			vector<double> newMean = shiftPoint(oldMean, points, bandwidth);
 			
 			bool isStop = eulaDistance(oldMean, newMean) < SHIFT_COEF * bandwidth;
 			oldMean = newMean;
 			++count;
 
-			if(isStop) //Èç¹ûÆ«ÒÆºóµÄµãÓëÔ­ÏÈµãµÄ¾àÀëÐ¡ÓÚãÐÖµ£¬ÔòÖÕÖ¹
+			if(isStop) //å¦‚æžœåç§»åŽçš„ç‚¹ä¸ŽåŽŸå…ˆç‚¹çš„è·ç¦»å°äºŽé˜ˆå€¼ï¼Œåˆ™ç»ˆæ­¢
 			{
 				break;
 			}
 		}
 
 		int j (0);
-		for(j = 0; j < clusters.size(); ++j) //±éÀúÒÑÓÐµÄcluster£¬¿´ÊôÓÚÄÄ¸ö¾ÛÀà
+		for(j = 0; j < clusters.size(); ++j) //éåŽ†å·²æœ‰çš„clusterï¼Œçœ‹å±žäºŽå“ªä¸ªèšç±»
 		{
-			if(eulaDistance(oldMean, clusters[j].mode) < CLUSTER_COEF * bandwidth) //ÕÒµ½
+			if(eulaDistance(oldMean, clusters[j].mode) < CLUSTER_COEF * bandwidth) //æ‰¾åˆ°
 				break;
 		}
 
-		if(j == clusters.size()) //Ã»ÕÒµ½
+		if(j == clusters.size()) //æ²¡æ‰¾åˆ°
 		{
 			Cluster clus;
             clus.mode = oldMean;
-            clusters.push_back(clus); //ÐÂÔö¾ÛÀà
+            clusters.push_back(clus); //æ–°å¢žèšç±»
 		}
 
-		clusters[j].support.push_back(points[i]); //½«ÒÑÓÐµã¼ÓÈë¾ÛÀà
+		clusters[j].support.push_back(points[i]); //å°†å·²æœ‰ç‚¹åŠ å…¥èšç±»
 	}
 
 	return clusters;

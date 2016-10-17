@@ -17,40 +17,40 @@ template<class T>
 class KDTree
 {
 public: 
-	//µ±Ç°Öµ
+	//å½“å‰å€¼
 	Point<T>* root;
-	//¸¸½Úµã
+	//çˆ¶èŠ‚ç‚¹
 	KDTree<T>* parent;
-	//×ó×ÓÊ÷
+	//å·¦å­æ ‘
 	KDTree<T>* leftChild;
-	//ÓÒ×ÓÊ÷
+	//å³å­æ ‘
 	KDTree<T>* rightChild;
-	//µ±Ç°»®·ÖÎ¬¶È
+	//å½“å‰åˆ’åˆ†ç»´åº¦
 	int split;
 
-	//Ä¬ÈÏ¹¹Ôìº¯Êı
-	KDTree(){parent = leftChild = rightChild = NULL;}
+	//é»˜è®¤æ„é€ å‡½æ•°
+	KDTree(){parent = leftChild = rightChild = NULL; split = -1;}
 	~KDTree(){freeMemory();}
 
-	//ÅĞ¶ÏkdÊ÷ÊÇ·ñÎª¿Õ
+	//åˆ¤æ–­kdæ ‘æ˜¯å¦ä¸ºç©º
 	bool isEmpty(){ return root == NULL;}
-	//ÅĞ¶ÏkdÊ÷ÊÇ·ñÖ»ÊÇÒ»¸öÒ¶×Ó½áµã
+	//åˆ¤æ–­kdæ ‘æ˜¯å¦åªæ˜¯ä¸€ä¸ªå¶å­ç»“ç‚¹
 	bool isLeaf(){ return root != NULL && rightChild == NULL && leftChild == NULL;}
-	//ÅĞ¶ÏÊÇ·ñÊÇÊ÷µÄ¸ù½áµã
+	//åˆ¤æ–­æ˜¯å¦æ˜¯æ ‘çš„æ ¹ç»“ç‚¹
 	bool isRoot(){ return (!isEmpty()) && parent == NULL;}
-	//ÅĞ¶Ï¸Ã×ÓkdÊ÷µÄ¸ù½áµãÊÇ·ñÊÇÆä¸¸kdÊ÷µÄ×ó½áµã
+	//åˆ¤æ–­è¯¥å­kdæ ‘çš„æ ¹ç»“ç‚¹æ˜¯å¦æ˜¯å…¶çˆ¶kdæ ‘çš„å·¦ç»“ç‚¹
 	bool isLeft(){ if (parent->leftChild != NULL) return parent->leftChild->root == root; return false;}
-	//ÅĞ¶Ï¸Ã×ÓkdÊ÷µÄ¸ù½áµãÊÇ·ñÊÇÆä¸¸kdÊ÷µÄÓÒ½áµã
+	//åˆ¤æ–­è¯¥å­kdæ ‘çš„æ ¹ç»“ç‚¹æ˜¯å¦æ˜¯å…¶çˆ¶kdæ ‘çš„å³ç»“ç‚¹
 	bool isRight() { if(parent-rightChild != NULL) return parent->rightChild->root == root; return false;}
 
-	//´Ó´Ë´¦´´½¨×ÓÊ÷£¬¿ÉÒÔÊÍ·ÅÄÚ´æ
+	//ä»æ­¤å¤„åˆ›å»ºå­æ ‘ï¼Œå¯ä»¥é‡Šæ”¾å†…å­˜
 	KDTree<T>* generateNewTree(){ KDTree<T>* tree = new KDTree<T>(); delList.push_back(tree); return tree;}
 
 private:
-	//É¾³ıÁĞ±í
+	//åˆ é™¤åˆ—è¡¨
 	vector<KDTree<T>*> delList;
 
-	//ÊÍ·Å×ÓÊ÷µÄÄÚ´æ
+	//é‡Šæ”¾å­æ ‘çš„å†…å­˜
 	void freeMemory()
 	{
 		for(vector<KDTree<T>*>::iterator it = delList.begin(); it != delList.end(); ++it)
@@ -69,21 +69,21 @@ template <class T>
 class KDTreeUtils
 {
 public:
-	//¹¹½¨kdÊ÷
+	//æ„å»ºkdæ ‘
 	static void buildKdTree(KDTree<T>* tree, vector<Point<T>*> data, unsigned depth)
 	{
 		if(tree == NULL)
 		{
 			return;
 		}
-		//Ñù±¾µÄÊıÁ¿
+		//æ ·æœ¬çš„æ•°é‡
 		unsigned samplesNum = data.size();
-		//ÖÕÖ¹Ìõ¼ş
+		//ç»ˆæ­¢æ¡ä»¶
 		if (samplesNum == 0)
 		{
 			return;
 		}
-		//Ñù±¾µÄ×ÜÎ¬¶È
+		//æ ·æœ¬çš„æ€»ç»´åº¦
 		int k = data[0]->getDimensionAmount();
 
 		if (samplesNum == 1)
@@ -93,16 +93,16 @@ public:
 			return;
 		}
 
-		//Ñ¡ÔñÇĞ·ÖÎ¬¶È
+		//é€‰æ‹©åˆ‡åˆ†ç»´åº¦
 		int splitAttribute = depth % k;
-		//ÅÅĞòÇóÖĞÎ»Êı
+		//æ’åºæ±‚ä¸­ä½æ•°
 		double splitValue = getMidNumOfDim(data, splitAttribute);
 
-		// ¸ù¾İÑ¡¶¨µÄÇĞ·ÖÊôĞÔºÍÇĞ·ÖÖµ£¬½«Êı¾İ¼¯·ÖÎªÁ½¸ö×Ó¼¯
+		// æ ¹æ®é€‰å®šçš„åˆ‡åˆ†å±æ€§å’Œåˆ‡åˆ†å€¼ï¼Œå°†æ•°æ®é›†åˆ†ä¸ºä¸¤ä¸ªå­é›†
 		vector<Point<T>*> subsetLeft;
 		vector<Point<T>*> subsetRight;
 
-		//±ÈÖĞÎ»ÊıĞ¡µÄ·ÅÔÚ×ó¼¯ºÏ£¬´óµÄ·ÅÔÚÓÒ¼¯ºÏ
+		//æ¯”ä¸­ä½æ•°å°çš„æ”¾åœ¨å·¦é›†åˆï¼Œå¤§çš„æ”¾åœ¨å³é›†åˆ
 		for(vector<Point<T>*>::iterator it = data.begin(); it != data.end(); ++it)
 		{
 			Point<T>* p = *it;
@@ -118,7 +118,7 @@ public:
 			}
 		}
 
-		//×Ó¼¯µİ¹éµ÷ÓÃbuildKdTreeº¯Êı
+		//å­é›†é€’å½’è°ƒç”¨buildKdTreeå‡½æ•°
 		if(subsetLeft.size() > 0)
 		{
 			tree->leftChild = tree->generateNewTree();
@@ -134,9 +134,9 @@ public:
 		}
 	}
 
-	//ÔÚkdÊ÷treeÖĞËÑË÷Ä¿±êµãgoalµÄ×î½üÁÚ
-	//ÊäÈë£ºÄ¿±êµã£»ÒÑ¹¹ÔìµÄkdÊ÷
-	//Êä³ö£ºÄ¿±êµãµÄ×î½üÁÚ
+	//åœ¨kdæ ‘treeä¸­æœç´¢ç›®æ ‡ç‚¹goalçš„æœ€è¿‘é‚»
+	//è¾“å…¥ï¼šç›®æ ‡ç‚¹ï¼›å·²æ„é€ çš„kdæ ‘
+	//è¾“å‡ºï¼šç›®æ ‡ç‚¹çš„æœ€è¿‘é‚»
 	static Point<T>* searchNearestNeighbor(Point<T>* goal, KDTree<T>* tree)
 	{
 		vector<Point<T>*> out = knn(goal, tree, 1, 200);
@@ -150,7 +150,7 @@ public:
 		}
 	}
 
-	//k½üÁÚËÑË÷£¨½üËÆ£©£¬ÀûÓÃÁ½¸ö¶Ñ£¬Ò»¸ö·ÃÎÊ½áµã¶Ñ£¬Ò»¸öºòÑ¡Â·¾¶¶Ñ
+	//kè¿‘é‚»æœç´¢ï¼ˆè¿‘ä¼¼ï¼‰ï¼Œåˆ©ç”¨ä¸¤ä¸ªå †ï¼Œä¸€ä¸ªè®¿é—®ç»“ç‚¹å †ï¼Œä¸€ä¸ªå€™é€‰è·¯å¾„å †
 	static vector<Point<T>*> knn(Point<T>* goal, KDTree<T>* tree, unsigned int k, int maxCount)
 	{
 		CompareRoutePoint routerComp (goal);
@@ -172,6 +172,8 @@ public:
 			KDTree<T>* out = candicateQueue.poll();
 
 			searchLeafWithHeap(goal, out, k, routerQueue, candicateQueue);
+
+			++cycleCount;
 		}
 
 		vector<Point<T>*> result = routerQueue.allData();
@@ -180,8 +182,40 @@ public:
 		return result;
 	}
 
+	//råŠå¾„æœç´¢ï¼ˆè¿‘ä¼¼ï¼‰ï¼ŒåŒæ ·åˆ©ç”¨ä¸¤ä¸ªå †ï¼Œä¸€ä¸ªè®¿é—®ç»“ç‚¹å †ï¼Œä¸€ä¸ªå€™é€‰è·¯å¾„å †
+	static vector<Point<T>*> radiusSearch(Point<T>* goal, KDTree<T>* tree, T radius, int maxCount)
+	{
+		vector<Point<T>*> routerList; // è·¯å¾„åˆ—è¡¨ï¼Œå­˜å‚¨å°äºåŠå¾„çš„ç‚¹
+		vector<KDTree<T>*> candiList; // å€™é€‰è·¯å¾„åˆ—è¡¨
+
+		if(goal == NULL || tree == NULL || radius < 0)
+		{
+			return routerList;
+		}
+
+		enterRadiusSearchCandicate(goal, tree, radius, candiList);
+		int cycleCount = 0;
+
+		while(candiList.size() > 0 && cycleCount < maxCount)
+		{
+			if(candiList.size() == 0)
+			{
+				break;
+			}
+
+			KDTree<T>* out = candiList[candiList.size() - 1];
+			candiList.pop_back();
+			radiusSearchLeafWithVector(goal, out, radius, routerList, candiList);
+
+			++cycleCount;
+		}
+
+		//è¾“å‡ºæ— åºçš„åˆ—è¡¨
+		return routerList;
+	}
+
 private:
-	//½¨Ê÷£¬¶ÔÄ³Î¬¶ÈµÄËùÓĞÖµ½øĞĞÅÅĞò
+	//å»ºæ ‘ï¼Œå¯¹æŸç»´åº¦çš„æ‰€æœ‰å€¼è¿›è¡Œæ’åº
 	class CompareDimValue : public ATICompare<Point<T>*>
 	{
 	public:
@@ -195,7 +229,7 @@ private:
 		int sortDimension;
 	};
 
-	//¶Ô·ÃÎÊ½áµãµÄ¶Ñ½øĞĞÅÅĞò
+	//å¯¹è®¿é—®ç»“ç‚¹çš„å †è¿›è¡Œæ’åº
 	class CompareRoutePoint : public ATICompare<Point<T>*>
 	{
 	public:
@@ -209,7 +243,7 @@ private:
 		Point<T>* sortGoal;
 	};
 
-	//¶ÔºòÑ¡Â·¾¶¶Ñ½øĞĞÅÅĞò
+	//å¯¹å€™é€‰è·¯å¾„å †è¿›è¡Œæ’åº
 	class CompareCandicatePoint : public ATICompare<KDTree<T>*>
 	{
 	public:
@@ -217,7 +251,7 @@ private:
 
 		virtual bool compare(KDTree<T>*& left, KDTree<T>*& right)
 		{
-			/**Ä¿±êµãÓë³¬Æ½Ãæ¾àÀë×÷ÎªºòÑ¡µãÓÅÏÈ¼¶ÅÅĞò±ê×¼**/
+			/**ç›®æ ‡ç‚¹ä¸è¶…å¹³é¢è·ç¦»ä½œä¸ºå€™é€‰ç‚¹ä¼˜å…ˆçº§æ’åºæ ‡å‡†**/
 			if(left->root != NULL && right->root != NULL)
 			{
 				return abs(left->root->getValue(left->split) - sortGoal->getValue(left->split))
@@ -229,7 +263,7 @@ private:
 		Point<T>* sortGoal;
 	};
 
-	//½¨Ê÷ÖĞ£¬·µ»ØÄ³Î¬¶ÈµÄÖĞÎ»Êı
+	//å»ºæ ‘ä¸­ï¼Œè¿”å›æŸç»´åº¦çš„ä¸­ä½æ•°
 	static double getMidNumOfDim(vector<Point<T>*>& src, int dimension)
 	{
 		CompareDimValue compValue (dimension);
@@ -244,11 +278,11 @@ private:
 		return src[src.size() - k]->getValue(dimension);
 	}
 
-	//´ÓÒÑÖªÎ»ÖÃËÑË÷µ½Ò¶×Ó½áµã
+	//knnä»å·²çŸ¥ä½ç½®æœç´¢åˆ°å¶å­ç»“ç‚¹
 	static KDTree<T>* searchLeafWithHeap(Point<T>* goal, KDTree<T> *tree, int k, ATPriorityQueue<Point<T>*>& router, ATPriorityQueue<KDTree<T>*>& candicater)
 	{
 		KDTree<T>* currentTree = tree;
-		router.add(currentTree->root); //Â·¾¶Èë¶Ñ
+		router.add(currentTree->root); //è·¯å¾„å…¥å †
 
 		int tempDim (-1);
 		while(currentTree != NULL && !currentTree->isLeaf())
@@ -260,11 +294,11 @@ private:
 				{
 					if(currentTree->rightChild != NULL)
 					{
-						candicater.add(currentTree->rightChild);//ÁíÒ»·ÖÖ§×÷ÎªºòÑ¡µãÈë¶Ñ
+						candicater.add(currentTree->rightChild);//å¦ä¸€åˆ†æ”¯ä½œä¸ºå€™é€‰ç‚¹å…¥å †
 					}
 
 					currentTree = currentTree->leftChild;
-					router.add(currentTree->root); //Â·¾¶Èë¶Ñ
+					router.add(currentTree->root); //è·¯å¾„å…¥å †
 				}
 				else
 				{
@@ -275,7 +309,7 @@ private:
 					else
 					{
 						currentTree = currentTree->rightChild;
-						router.add(currentTree->root); //Â·¾¶Èë¶Ñ
+						router.add(currentTree->root); //è·¯å¾„å…¥å †
 					}
 				}
 			}
@@ -285,11 +319,11 @@ private:
 				{
 					if(currentTree->leftChild != NULL)
 					{
-						candicater.add(currentTree->leftChild); //ÁíÒ»·ÖÖ§×÷ÎªºòÑ¡µãÈë¶Ñ
+						candicater.add(currentTree->leftChild); //å¦ä¸€åˆ†æ”¯ä½œä¸ºå€™é€‰ç‚¹å…¥å †
 					}
 
 					currentTree = currentTree->rightChild;
-					router.add(currentTree->root);//Â·¾¶Èë¶Ñ
+					router.add(currentTree->root);//è·¯å¾„å…¥å †
 				}
 				else
 				{
@@ -300,7 +334,7 @@ private:
 					else
 					{
 						currentTree = currentTree->leftChild;
-						router.add(currentTree->root);//Â·¾¶Èë¶Ñ
+						router.add(currentTree->root);//è·¯å¾„å…¥å †
 					}
 				}
 				
@@ -310,7 +344,104 @@ private:
 		return currentTree;
 	}
 
-	//Ô­Ê¼µÄ×î½üÁÚËÑË÷Ëã·¨£¬·ÇBBF
+	//radius searchä»å·²çŸ¥ä½ç½®æœç´¢åˆ°å¶å­ç»“ç‚¹
+	static KDTree<T>* radiusSearchLeafWithVector(Point<T>* goal, KDTree<T> *tree, T radius, vector<Point<T>*>& router, vector<KDTree<T>*>& candicater)
+	{
+		KDTree<T>* currentTree = tree;
+		enterRadiusSearchRouter(goal, currentTree->root, radius, router); //è·¯å¾„å…¥æ•°ç»„
+
+		int tempDim (-1);
+		while(currentTree != NULL && !currentTree->isLeaf())
+		{
+			tempDim = currentTree->split;
+			if (goal->getValue(tempDim) < currentTree->root->getValue(tempDim))
+			{
+				if(currentTree->leftChild != NULL)
+				{
+					if(currentTree->rightChild != NULL)
+					{
+						enterRadiusSearchCandicate(goal, currentTree->rightChild, radius, candicater); //å¦ä¸€åˆ†æ”¯ä½œä¸ºå€™é€‰ç‚¹è¿›å…¥æ•°ç»„
+					}
+
+					currentTree = currentTree->leftChild;
+					enterRadiusSearchRouter(goal, currentTree->root, radius, router); //è·¯å¾„å…¥æ•°ç»„
+				}
+				else
+				{
+					if(currentTree->isLeaf())
+					{
+						break;
+					}
+					else
+					{
+						currentTree = currentTree->rightChild;
+						enterRadiusSearchRouter(goal, currentTree->root, radius, router); //è·¯å¾„å…¥æ•°ç»„
+					}
+				}
+			}
+			else
+			{
+				if(currentTree->rightChild != NULL)
+				{
+					if(currentTree->leftChild != NULL)
+					{
+						enterRadiusSearchCandicate(goal, currentTree->leftChild, radius, candicater); //å¦ä¸€åˆ†æ”¯ä½œä¸ºå€™é€‰ç‚¹è¿›å…¥æ•°ç»„
+					}
+
+					currentTree = currentTree->rightChild;
+					enterRadiusSearchRouter(goal, currentTree->root, radius, router); //è·¯å¾„å…¥æ•°ç»„
+				}
+				else
+				{
+					if(currentTree->isLeaf())
+					{
+						break;
+					}
+					else
+					{
+						currentTree = currentTree->leftChild;
+						enterRadiusSearchRouter(goal, currentTree->root, radius, router); //è·¯å¾„å…¥æ•°ç»„
+					}
+				}
+				
+			}
+		}
+
+		return currentTree;
+	}
+
+	//radius search è¿›å…¥è·¯å¾„æ•°ç»„
+	static void enterRadiusSearchRouter(Point<T>* goal, Point<T> *point, T radius, vector<Point<T>*>& routeList)
+	{
+		if(goal == NULL || point == NULL)
+		{
+			return;
+		}
+
+		//ç›®æ ‡ç‚¹åˆ°ç‚¹çš„è·ç¦»å°äºRï¼Œè¿›å…¥è·¯å¾„æ•°ç»„
+		if(measureDistance(*goal, *point) < radius)
+		{
+			routeList.push_back(point);
+		}
+	}
+
+	//radius search è¿›å…¥å€™é€‰æ•°ç»„
+	static void enterRadiusSearchCandicate(Point<T>* goal, KDTree<T>* tree, T radius, vector<KDTree<T>*>& candiList)
+	{
+		if(goal == NULL || tree == NULL || tree->root == NULL || tree->split == -1)
+		{
+			return;
+		}
+
+		//ç›®æ ‡ç‚¹åˆ°è¶…å¹³é¢è·ç¦»å°äºRï¼Œå¯ä»¥è¿›å…¥å€™é€‰æ•°ç»„
+		int dim = tree->split;
+		if(abs(goal->getValue(dim) - tree->root->getValue(dim)) < radius)
+		{
+			candiList.push_back(tree);
+		}
+	}
+
+	//åŸå§‹çš„æœ€è¿‘é‚»æœç´¢ç®—æ³•ï¼ŒéBBF
 	//static Point<T>* nearestNeighborImpl(Point<T>* goal, KDTree<T> *tree, set<Point<T>*>& visitedSets)
 	//{
 	//	Point<T>* currentNearest = tree->root;
@@ -318,10 +449,10 @@ private:
 	//	currentNearest = currentTree->root;
 
 
-	//	//Èç¹ûËÑË÷ÇøÓò¶ÔÓ¦µÄ×ÓkdÊ÷µÄ¸ù½áµã²»ÊÇÕû¸ökdÊ÷µÄ¸ù½áµã£¬¼ÌĞø»ØÍËËÑË÷
+	//	//å¦‚æœæœç´¢åŒºåŸŸå¯¹åº”çš„å­kdæ ‘çš„æ ¹ç»“ç‚¹ä¸æ˜¯æ•´ä¸ªkdæ ‘çš„æ ¹ç»“ç‚¹ï¼Œç»§ç»­å›é€€æœç´¢
 	//	while (currentTree->parent != NULL)
 	//	{
-	//		//×ó×ÓÊ÷´æÔÚ£¬ÇÒÎ´·ÃÎÊ¹ıÔòÒ»Ö±Ïò×óÒÆ¶¯
+	//		//å·¦å­æ ‘å­˜åœ¨ï¼Œä¸”æœªè®¿é—®è¿‡åˆ™ä¸€ç›´å‘å·¦ç§»åŠ¨
 	//		if(currentTree->leftChild != NULL 
 	//			&& !isVisited(visitedSets, currentTree->leftChild->root))
 	//		{
@@ -331,30 +462,30 @@ private:
 	//		else
 	//		{
 
-	//			//Èô¸üĞ¡£¬Ôò¸üĞÂ×î½üµã
+	//			//è‹¥æ›´å°ï¼Œåˆ™æ›´æ–°æœ€è¿‘ç‚¹
 	//			if(measureDistance(*goal, *currentTree->root) < measureDistance(*goal, *currentNearest))
 	//			{
 	//				currentNearest = currentTree->root;
 	//			}
-	//			setVisited(visitedSets, currentTree->root); //ÒÑ¾­·ÃÎÊ
+	//			setVisited(visitedSets, currentTree->root); //å·²ç»è®¿é—®
 
-	//			//ËÑË÷ÇøÓòµÄÎ¬¶È¼°¸ÃÎ¬¶ÈÏÂ³¬Æ½ÃæµÄÖµ
+	//			//æœç´¢åŒºåŸŸçš„ç»´åº¦åŠè¯¥ç»´åº¦ä¸‹è¶…å¹³é¢çš„å€¼
 	//			int searchDim = currentTree->parent->split;
 	//			double superPlaneValue = currentTree->parent->root->getValue(searchDim);
-	//			//Ä¿±êµãµ½³¬Æ½ÃæµÄ¾àÀë
+	//			//ç›®æ ‡ç‚¹åˆ°è¶…å¹³é¢çš„è·ç¦»
 	//			double districtDistance = abs(goal->getValue(searchDim) - superPlaneValue);
 
 
 	//			KDTree<T>* anotherTree;
-	//			//×óÓÒ×ÓÊ÷ÇĞ»»
+	//			//å·¦å³å­æ ‘åˆ‡æ¢
 	//			currentTree->isLeft() ? anotherTree = currentTree->parent->rightChild : anotherTree = currentTree->parent->leftChild;
-	//			//Èç¹û¡°Ä¿±êµãµ½³¬Æ½ÃæµÄ¾àÀë¡±±È¡°Ä¿±êµãµ½µ±Ç°×î½üµã¾àÀë¡±¶Ì£¬±íÃ÷¸¸½Úµã»ò
-	//			//ÁíÒ»×ÓÊ÷¿ÉÄÜ´æÔÚ¾àÀëÄ¿±êµã¸ü½üµÄµã
+	//			//å¦‚æœâ€œç›®æ ‡ç‚¹åˆ°è¶…å¹³é¢çš„è·ç¦»â€æ¯”â€œç›®æ ‡ç‚¹åˆ°å½“å‰æœ€è¿‘ç‚¹è·ç¦»â€çŸ­ï¼Œè¡¨æ˜çˆ¶èŠ‚ç‚¹æˆ–
+	//			//å¦ä¸€å­æ ‘å¯èƒ½å­˜åœ¨è·ç¦»ç›®æ ‡ç‚¹æ›´è¿‘çš„ç‚¹
 	//			if(districtDistance < measureDistance(*goal, *currentNearest))
 	//			{
 	//				if(anotherTree != NULL && !isVisited(visitedSets, anotherTree->root))
 	//				{
-	//					//Èô´æÔÚ»òÎ´·ÃÎÊÔò½«µ±Ç°Ê÷ÇĞ»»¹ıÈ¥
+	//					//è‹¥å­˜åœ¨æˆ–æœªè®¿é—®åˆ™å°†å½“å‰æ ‘åˆ‡æ¢è¿‡å»
 	//					currentTree = anotherTree;
 	//					continue;
 	//				}
@@ -367,8 +498,8 @@ private:
 	//			{
 	//				if(anotherTree != NULL)
 	//				{
-	//					//ÁíÒ»±ß×ÓÊ÷Ã÷ÏÔ¸ü´ó£¬ÉèÖÃÎªÒÑ·ÃÎÊ£¨·ÀÖ¹ÔÙ´Îµü´ú£©
-	//					setVisited(visitedSets, anotherTree->root); //ÒÑ¾­·ÃÎÊ
+	//					//å¦ä¸€è¾¹å­æ ‘æ˜æ˜¾æ›´å¤§ï¼Œè®¾ç½®ä¸ºå·²è®¿é—®ï¼ˆé˜²æ­¢å†æ¬¡è¿­ä»£ï¼‰
+	//					setVisited(visitedSets, anotherTree->root); //å·²ç»è®¿é—®
 	//				}
 	//				currentTree = currentTree->parent;
 	//			}

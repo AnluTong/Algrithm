@@ -9,7 +9,7 @@ template <class T>
 class ATSort
 {
 public:
-	/**´ÓĞ¡µ½´óÅÅĞò£¬compare×óĞ¡ÓÚÓÒ£¬ÔòÎªtrue£¬Ô­Ê¼Êı¾İ±»ÅÅĞò**/
+	/**ä»å°åˆ°å¤§æ’åºï¼Œcompareå·¦å°äºå³ï¼Œåˆ™ä¸ºtrueï¼ŒåŸå§‹æ•°æ®è¢«æ’åº**/
 	static void sort(vector<T>& raw, ATICompare<T>& compare)
 	{
 		if(raw.size() == 0 || raw.size() == 1)
@@ -20,7 +20,7 @@ public:
 		HeapSort(raw, compare);
 	}
 
-	/**Ô­Êı¾İ±»²¿·ÖÅÅĞò£¬K¸öÊı¾İ´ÓĞ¡µ½´ó·ÅÔÚÊı×é×îºó£¬compare×óĞ¡ÓÚÓÒ£¬ÔòÎªtrue**/
+	/**åŸæ•°æ®è¢«éƒ¨åˆ†æ’åºï¼ŒKä¸ªæ•°æ®ä»å°åˆ°å¤§æ”¾åœ¨æ•°ç»„æœ€åï¼Œcompareå·¦å°äºå³ï¼Œåˆ™ä¸ºtrue**/
 	static void getMaxK(vector<T>& raw, int k, ATICompare<T>& compare)
 	{
 		if(raw.size() < k || k == 0)
@@ -32,37 +32,37 @@ public:
 	}
 
 private:
-	/**¿ìËÙÅÅĞò**/
+	/**å¿«é€Ÿæ’åº**/
 	static void quickSort(vector<T>& raw, int low, int high, ATICompare<T>& compare)
 	{
 		if (low < high)
 		{
 			int l = low;
 			int r = high;
-			T key = vec[l];//¼ÇÂ¼keyÖµ
+			T key = vec[l];//è®°å½•keyå€¼
 
 			while (l < r)
 			{
-				while (l < r && compare.compare(key, vec[r]))//´ÓÓÒÍù×ó±éÀú,ÕÒµ½µÚÒ»¸öĞ¡ÓÚkeyµÄÔªËØ
+				while (l < r && compare.compare(key, vec[r]))//ä»å³å¾€å·¦éå†,æ‰¾åˆ°ç¬¬ä¸€ä¸ªå°äºkeyçš„å…ƒç´ 
 					--r;
 				vec[l] = vec[r];
 				while (l < r 
-					&& !compare.compare(key, vec[l]))//´Ó×óÍùÓÒ±éÀú,ÕÒµ½µÚÒ»¸ö´óÓÚkeyÖµµÄÔªËØ
+					&& !compare.compare(key, vec[l]))//ä»å·¦å¾€å³éå†,æ‰¾åˆ°ç¬¬ä¸€ä¸ªå¤§äºkeyå€¼çš„å…ƒç´ 
 					++l;
 				vec[r] = vec[l];
 			}
-			vec[l] = key;//ÆäÊµ´ËÊ±l=r
+			vec[l] = key;//å…¶å®æ­¤æ—¶l=r
 
 			quicksort(vec, low, l-1, compare);
 			quicksort(vec, r + 1, high, compare);
 		}
 	}
 
-	/**¶ÑÅÅĞò**/
+	/**å †æ’åº**/
 	static void HeapSort(vector<T>& raw, ATICompare<T>& compare)
 	{
 		int n = raw.size();
-		//ÏÈ½¨Á¢´ó¶¥¶Ñ
+		//å…ˆå»ºç«‹å¤§é¡¶å †
 		for(int i = n/2 - 1; i >= 0; --i)
 		{
 			ATHeap<T>::heapAdjust(raw, i, n - 1, compare);
@@ -70,35 +70,35 @@ private:
 
 		for(int i = n - 1; i >= 1; --i)  
 		{  
-			T temp = raw[0];   //½«µ±Ç°¶ÑµÄ¸ù½Úµã½»»»µ½¶ÑÎ²µÄÖ¸¶¨Î»ÖÃ  
+			T temp = raw[0];   //å°†å½“å‰å †çš„æ ¹èŠ‚ç‚¹äº¤æ¢åˆ°å †å°¾çš„æŒ‡å®šä½ç½®  
 			raw[0] = raw[i];  
 			raw[i] = temp;  
   
-			ATHeap<T>::heapAdjust(raw, 0, i - 1, compare);  //½¨Á¢ÏÂÒ»´ÎµÄ×î´ó¶Ñ  
+			ATHeap<T>::heapAdjust(raw, 0, i - 1, compare);  //å»ºç«‹ä¸‹ä¸€æ¬¡çš„æœ€å¤§å †  
 		}
 
 	}
 
-	/**²¿·Ö¶ÑÅÅĞò**/
+	/**éƒ¨åˆ†å †æ’åº**/
 	static void HeapPartlySort(vector<T>& raw, int k, ATICompare<T>& compare)
 	{
 		int n = raw.size();
-		//ÏÈ½¨Á¢´ó¶¥¶Ñ
+		//å…ˆå»ºç«‹å¤§é¡¶å †
 		for(int i = n/2 - 1; i >= 0; --i)
 		{
 			ATHeap<T>::heapAdjust(raw, i, n - 1, compare);
 		}
 
-		//½øĞĞÅÅĞò
+		//è¿›è¡Œæ’åº
 		int limit = (n - k - 1 < 0) ? 0 : n - k - 1;
 		for(int i = n - 1; i > limit; --i)
 		{
-			//×îºóÒ»¸öÔªËØºÍµÚÒ»ÔªËØ½øĞĞ½»»»
+			//æœ€åä¸€ä¸ªå…ƒç´ å’Œç¬¬ä¸€å…ƒç´ è¿›è¡Œäº¤æ¢
 			T temp = raw[i];
 			raw[i] = raw[0];
 			raw[0] = temp;
 
-			//È»ºó½«Ê£ÏÂµÄÎŞĞòÔªËØ¼ÌĞøµ÷ÕûÎª´ó¶¥¶Ñ
+			//ç„¶åå°†å‰©ä¸‹çš„æ— åºå…ƒç´ ç»§ç»­è°ƒæ•´ä¸ºå¤§é¡¶å †
 			ATHeap<T>::heapAdjust(raw, 0, i - 1, compare);
 		}
 	}

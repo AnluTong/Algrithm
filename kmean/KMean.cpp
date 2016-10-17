@@ -5,7 +5,7 @@
 
 void KMean::initCentroids()
 {
-	//³õÊ¼»¯centroids
+	//åˆå§‹åŒ–centroids
 	vector<vector<double> >().swap(centroids);
 	vector<double> vec(DIM_SIZE, 0);
 	for (int i = 0; i < K_SIZE; ++i)
@@ -17,8 +17,8 @@ void KMean::initCentroids()
 	srand(time(NULL));
 	for (int j = 0; j < DIM_SIZE; ++j)
 	{
-		//»ñÈ¡µÚjÎ¬×î´ó×îĞ¡Öµ£¬²¢ÉèÖÃk¸ö¾ÛÀàÎª¸Ã·¶Î§ÄÚµÄËæ»úÖµ
-		//»ñÈ¡idxÎ¬¶ÈµÄ×î´óºÍ×îĞ¡Öµ
+		//è·å–ç¬¬jç»´æœ€å¤§æœ€å°å€¼ï¼Œå¹¶è®¾ç½®kä¸ªèšç±»ä¸ºè¯¥èŒƒå›´å†…çš„éšæœºå€¼
+		//è·å–idxç»´åº¦çš„æœ€å¤§å’Œæœ€å°å€¼
 		int idx = j;
 		double min, max;
 		dataSet[0].at(idx) > dataSet[1].at(idx) 
@@ -35,7 +35,7 @@ void KMean::initCentroids()
 				continue;
 		}
 
-		//³õÊ¼»¯¾ÛÀàÖĞĞÄ
+		//åˆå§‹åŒ–èšç±»ä¸­å¿ƒ
 		double rangeIdx = max - min;
 		for (int k = 0; k < K_SIZE; ++k)
 		{
@@ -87,7 +87,7 @@ void KMean::clusterImpl(const vector<vector<double> >& data, int k)
 	{
 		++count;
 		clusterChanged = false;
-		//±È½Ï¾àÀë£¬½«ËùÓĞµã½øĞĞ·ÖÀà£¬²¢¸üĞÂ¸¨Öú½ÚµãÊı×é
+		//æ¯”è¾ƒè·ç¦»ï¼Œå°†æ‰€æœ‰ç‚¹è¿›è¡Œåˆ†ç±»ï¼Œå¹¶æ›´æ–°è¾…åŠ©èŠ‚ç‚¹æ•°ç»„
 		cout << "find the nearest centroid of each point : " << endl;
 		for (int i = 0; i < DATE_SIZE; ++i)
 		{
@@ -95,15 +95,15 @@ void KMean::clusterImpl(const vector<vector<double> >& data, int k)
 			double minDist = INT_MAX;
 			for (int j = 0; j < K_SIZE; ++j)
 			{
-				// Óë×î½üµÄÖÊĞÄ¾ÛÎªÒ»Àà
+				// ä¸æœ€è¿‘çš„è´¨å¿ƒèšä¸ºä¸€ç±»
 				double distJI = distEclud(centroids[j], dataSet[i]);
-				if ( distJI < minDist ) // Ö»È¡×î¶Ì¾àÀë
+				if ( distJI < minDist ) // åªå–æœ€çŸ­è·ç¦»
 				{
 					minDist = distJI;
 					minIndex = j;
 				}
 			}
-			//Ë÷ÒıÓë¾àÀëÈÎÒâÒ»¸ö¶¼²»ÏàÍ¬¶¼Òª¸üĞÂ¾àÀëÖµ
+			//ç´¢å¼•ä¸è·ç¦»ä»»æ„ä¸€ä¸ªéƒ½ä¸ç›¸åŒéƒ½è¦æ›´æ–°è·ç¦»å€¼
 			if ( clusterAssignment[i].minIndex != minIndex || clusterAssignment[i].minDist != minDist)
 			{
 				clusterChanged = true;
@@ -112,18 +112,18 @@ void KMean::clusterImpl(const vector<vector<double> >& data, int k)
 			}
 		}
 
-		//¸üĞÂ¾ÛÀàÖĞĞÄ
+		//æ›´æ–°èšç±»ä¸­å¿ƒ
 		cout << "update the centroids : " << endl;
 		vector<double> vec(DIM_SIZE, 0);
 		vector<vector<double> > vecList(K_SIZE, vec);
 		vector<int> countList(K_SIZE, 0);
 		for(int i = 0; i < DATE_SIZE; ++i)
 		{
-			//»ñÈ¡¸Ãµã¶ÔÓ¦µÄ¾ÛÀàË÷Òı
+			//è·å–è¯¥ç‚¹å¯¹åº”çš„èšç±»ç´¢å¼•
 			int clusterIdx =  clusterAssignment[i].minIndex;
-			//Í³¼Æ¸Ã¾ÛÀàµãµÄ¸öÊı
+			//ç»Ÿè®¡è¯¥èšç±»ç‚¹çš„ä¸ªæ•°
 			++countList[clusterIdx];
-			//¶Ô¸Ã¾ÛÀà¸÷Î¬¶È½øĞĞÇóºÍ
+			//å¯¹è¯¥èšç±»å„ç»´åº¦è¿›è¡Œæ±‚å’Œ
 			for(int dim = 0; dim < DIM_SIZE; ++dim)
 			{
 				vecList[clusterIdx][dim] += dataSet[i][dim];
@@ -134,12 +134,12 @@ void KMean::clusterImpl(const vector<vector<double> >& data, int k)
 		{
 			for( int dim = 0; dim < DIM_SIZE; ++dim)
 			{
-				//¶Ô¾ÛÀàÄ³Ò»Î¬¶ÈÇó¾ùÖµ£¬²¢ÒÔ´Ë×÷ÎªĞÂµÄ¾ÛÀàÖĞĞÄ
+				//å¯¹èšç±»æŸä¸€ç»´åº¦æ±‚å‡å€¼ï¼Œå¹¶ä»¥æ­¤ä½œä¸ºæ–°çš„èšç±»ä¸­å¿ƒ
 				if (countList[i] != 0)
 				{
 					vecList[i][dim] /= countList[i];
 				}
-				centroids[i][dim] = vecList[i][dim]; // ÖÊĞÄÊÇĞéÄâµÄ
+				centroids[i][dim] = vecList[i][dim]; // è´¨å¿ƒæ˜¯è™šæ‹Ÿçš„
 			}
 		}
 	}
@@ -151,16 +151,16 @@ vector<Cluster> KMean::devideCluster()
 	vector<Cluster> result (K_SIZE, cluster);
 	for(int i = 0; i < DATE_SIZE; ++i)
 	{
-		//»ñÈ¡¸Ãµã¶ÔÓ¦µÄ¾ÛÀàË÷Òı
+		//è·å–è¯¥ç‚¹å¯¹åº”çš„èšç±»ç´¢å¼•
 		int clusterIdx =  clusterAssignment[i].minIndex;
 		vector<double>& point = dataSet[i];
-		//¶Ôµã½øĞĞ·ÖÀà
+		//å¯¹ç‚¹è¿›è¡Œåˆ†ç±»
 		result[clusterIdx].support.push_back(point);
-		//ÉèÖÃ¾ÛÀàÖĞĞÄ
+		//è®¾ç½®èšç±»ä¸­å¿ƒ
 		result[clusterIdx].mode = centroids[clusterIdx];
 	}
 
-	//É¾³ı¿Õ¾ÛÀà
+	//åˆ é™¤ç©ºèšç±»
 	for(vector<Cluster>::iterator it = result.begin(); it != result.end();)
 	{
 		Cluster& clu = *it;

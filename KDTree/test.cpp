@@ -40,6 +40,14 @@ int main()
 		cout << resultSet[i]->getValue(0) << ", "<<resultSet[i]->getValue(1)<<", "<<resultSet[i]->getValue(2)<<endl;
 	}
 
+	cout << "The points within radius of 3mm are: "<< endl;
+
+	vector<Point<double>*> radiusResultSet = KDTreeUtils<double>::radiusSearch(&dest, tree, 3, 200);
+	for(size_t i = 0; i < radiusResultSet.size(); ++i)
+	{
+		cout << radiusResultSet[i]->getValue(0) << ", "<<radiusResultSet[i]->getValue(1)<<", "<<radiusResultSet[i]->getValue(2)<<endl;
+	}
+
 	getchar();
 	return 0;
 }

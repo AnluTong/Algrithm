@@ -15,8 +15,8 @@ public:
 	};
 
 	/**
-	* 空间平面表示 A0x + A1y + A2z + 1 = 0
-	* 返回值为0正常,返回值为-1异常
+	* 绌洪棿骞抽潰琛ㄧず A0x + A1y + A2z + 1 = 0
+	* 杩斿洖鍊间负0姝ｅ父,杩斿洖鍊间负-1寮傚父
 	**/
 	static void getNearestPlane(vector<Point*>& cloud, PlaneCoef& result)
 	{

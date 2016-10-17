@@ -19,11 +19,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	vector<Point*> dest;
 	vector<Point*> raw = anlysisFile("sick.pcd", dest);
 
-	//×îĞ¡¶ş³Ë·¨½øĞĞÆ½ÃæÄâºÏ
+	//æœ€å°äºŒä¹˜æ³•è¿›è¡Œå¹³é¢æ‹Ÿåˆ
 	PlaneUtils::PlaneCoef coef;
 	PlaneUtils::getNearestPlane(dest, coef);
 
-	//¼ÆËãËùÓĞµãÓëÄâºÏÆ½Ãæ¼ä¾àÀëÊ¸Á¿£¬È¡×î´óÓë×îĞ¡Ö®²î¡£
+	//è®¡ç®—æ‰€æœ‰ç‚¹ä¸æ‹Ÿåˆå¹³é¢é—´è·ç¦»çŸ¢é‡ï¼Œå–æœ€å¤§ä¸æœ€å°ä¹‹å·®ã€‚
 	double minD(99999), maxD(0);
 	for(vector<Point*>::iterator it = dest.begin(); it != dest.end(); ++it)
 	{
@@ -45,7 +45,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	printf("max distance is %5.3f, min distance is %5.3f, statical error is %5.3f \n", maxD, minD, maxD - minD);
 	getchar();
 
-	//ÊÍ·Å×ÊÔ´
+	//é‡Šæ”¾èµ„æº
 	for(vector<Point*>::iterator it = raw.begin(); it != raw.end(); ++it)
 	{
 		delete *it;
@@ -56,7 +56,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	return 0;
 }
 
-//É¨ÃèÎÄ¼ş´ÖÂÔ»ñÈ¡Ä¿±ê¼¯ºÏ
+//æ‰«ææ–‡ä»¶ç²—ç•¥è·å–ç›®æ ‡é›†åˆ
 vector<Point*> anlysisFile(string path, vector<Point*>& dest)
 {
 	vector<Point*> delList;

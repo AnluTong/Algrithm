@@ -8,18 +8,18 @@ template <class T>
 class ATHeap
 {
 public:
-	/**compare×óĞ¡ÓÚÓÒ£¬ÔòÎªtrue**/
+	/**compareå·¦å°äºå³ï¼Œåˆ™ä¸ºtrue**/
 	static void createBigHeap(vector<T>& raw, ATICompare<T>& compare)
 	{
 		int n = raw.size();
-		//ÏÈ½¨Á¢´ó¶¥¶Ñ
+		//å…ˆå»ºç«‹å¤§é¡¶å †
 		for(int i = n/2 - 1; i >= 0; --i)
 		{
 			heapAdjustImpl(raw, i, n - 1, compare);
 		}
 	}
 
-	/**Èë¶Ñ£¬¼Ù¶¨¶ÑÒÑÊÇ´ó¶¥¶Ñ**/
+	/**å…¥å †ï¼Œå‡å®šå †å·²æ˜¯å¤§é¡¶å †**/
 	static void heapIn(vector<T>& raw, T& value, ATICompare<T>& compare)
 	{
 		raw.push_back(value);
@@ -33,7 +33,7 @@ public:
 		}
 	}
 
-	/**³ö¶Ñ**/
+	/**å‡ºå †**/
 	static T heapOut(vector<T>& raw, ATICompare<T>& compare)
 	{
 		if(raw.size() == 0)
@@ -58,7 +58,7 @@ public:
 		return result;
 	}
 
-	/**¶Ñµ÷Õû**/
+	/**å †è°ƒæ•´**/
 	static void heapAdjust(vector<T>& raw, int start, int end, ATICompare<T>& compare)
 	{
 		if(start < 0 || start > end || start > raw.size() - 1)
@@ -70,29 +70,29 @@ public:
 	}
 
 private:
-	/**µ÷Õû¶Ñ**/
+	/**è°ƒæ•´å †**/
 	static void heapAdjustImpl(vector<T>& raw, int start, int end, ATICompare<T>& compare)
 	{
 		T temp = raw[start];
 
 		for(int i = 2 * start + 1; i <= end; i *= 2)
 		{
-			//ÒòÎª¼ÙÉè¸ù½áµãµÄĞòºÅÎª0¶ø²»ÊÇ1£¬ËùÒÔi½áµã×óº¢×ÓºÍÓÒº¢×Ó·Ö±ğÎª2i+1ºÍ2i+2
-			if(i < end && compare.compare(raw[i], raw[i+1]))//×óÓÒº¢×ÓµÄ±È½Ï
+			//å› ä¸ºå‡è®¾æ ¹ç»“ç‚¹çš„åºå·ä¸º0è€Œä¸æ˜¯1ï¼Œæ‰€ä»¥iç»“ç‚¹å·¦å­©å­å’Œå³å­©å­åˆ†åˆ«ä¸º2i+1å’Œ2i+2
+			if(i < end && compare.compare(raw[i], raw[i+1]))//å·¦å³å­©å­çš„æ¯”è¾ƒ
 			{
-				++i;//iÎª½Ï´óµÄ¼ÇÂ¼µÄÏÂ±ê
+				++i;//iä¸ºè¾ƒå¤§çš„è®°å½•çš„ä¸‹æ ‡
 			}
 
-			if(!compare.compare(temp, raw[i]))//×óÓÒº¢×ÓÖĞ»ñÊ¤ÕßÓë¸¸Ç×µÄ±È½Ï
+			if(!compare.compare(temp, raw[i]))//å·¦å³å­©å­ä¸­è·èƒœè€…ä¸çˆ¶äº²çš„æ¯”è¾ƒ
 			{
 				break;
 			}
 
-			//½«º¢×Ó½áµãÉÏÎ»£¬ÔòÒÔº¢×Ó½áµãµÄÎ»ÖÃ½øĞĞÏÂÒ»ÂÖµÄÉ¸Ñ¡
+			//å°†å­©å­ç»“ç‚¹ä¸Šä½ï¼Œåˆ™ä»¥å­©å­ç»“ç‚¹çš„ä½ç½®è¿›è¡Œä¸‹ä¸€è½®çš„ç­›é€‰
 			raw[start]= raw[i];
 			start = i;
 		}
 
-		raw[start]= temp; //Ô­Ê¼¶Ñ¶¥²åÈë×îÖÕ£¬×î´óµÄº¢×ÓÎ»ÖÃ
+		raw[start]= temp; //åŸå§‹å †é¡¶æ’å…¥æœ€ç»ˆï¼Œæœ€å¤§çš„å­©å­ä½ç½®
 	}
 };
